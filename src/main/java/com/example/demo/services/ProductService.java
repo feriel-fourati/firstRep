@@ -3,6 +3,7 @@ package com.example.demo.services;
 import java.util.List;
 
 import com.example.demo.domain.Product;
+import com.example.demo.domain.ProductForm;
 
 public interface ProductService {
 
@@ -14,6 +15,6 @@ public interface ProductService {
 
 	void delete(Long id);
 
-	// Product saveOrUpdateProductForm(ProductForm productForm);
+	Product saveOrUpdateProductForm(ProductForm productForm);
 
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.Product;
+import com.example.demo.domain.ProductForm;
 import com.example.demo.repositories.ProductRepository;
 
 @Service
@@ -14,12 +15,14 @@ public class ProductServiceImp implements ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-
-	//Constructor with field
 	@Autowired
-	public ProductServiceImp(ProductRepository productRepository) {
-		super();
+	private ProductFormToProduct productFormToProduct;
+
+	// Constructor with field
+	@Autowired
+	public ProductServiceImp(ProductRepository productRepository, ProductFormToProduct productFormToProduct) {
 		this.productRepository = productRepository;
+		this.productFormToProduct = productFormToProduct;
 	}
 
 	@Override
@@ -32,7 +35,7 @@ public class ProductServiceImp implements ProductService {
 
 	@Override
 	public Product getById(Long id) {
-		
+
 		return productRepository.findOne(id);
 	}
 
@@ -46,6 +49,14 @@ public class ProductServiceImp implements ProductService {
 	public void delete(Long id) {
 		productRepository.delete(id);
 
+	}
+
+	@Override
+	public Product saveOrUpdateProductForm(ProductForm productForm) {
+		Product savedProduct = saveOrUpdate(productFormToProduct.convert(productForm));
+
+		System.out.println("Saved Product Id: " + savedProduct.getId());
+		return savedProduct;
 	}
 
 }
